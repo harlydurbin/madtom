@@ -1,0 +1,109 @@
+---
+title: "Madtom fastStructure"
+author: "Harly Durbin"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(readr)
+library(tibble)
+library(dplyr)
+library(tidyr)
+library(stringr)
+library(ggplot2)
+library(reshape2)
+library(magrittr)
+library(scales)
+library(patchwork)
+library(forcats)
+```
+
+# Setup
+
+```{r}
+k2 <-
+  read_table2(
+    here::here(
+      "output/faststructure/madtom.sorted_snps/madtom.sorted_snps.fam"
+    ),
+    col_names = FALSE,
+    col_types = cols(.default = "c")
+  ) %>%
+  select(id = 1) %>%
+  bind_cols(read_table2(
+    here::here(
+      "output/faststructure/madtom.sorted_snps/madtom.sorted_snps.2.meanQ"
+    ),
+    col_names = FALSE
+  )) %>%
+  left_join(read_table2(
+    here::here("output/pca/poplabels.txt"),
+    col_names = c("pop", "id")
+  )) %>% 
+  mutate(pop = fct_relevel(pop, c("Stonecat", "UNR", "CR", "LNR"))) %>% 
+  mutate()
+```
+
+# Plot
+
+```{r}
+
+# Stolen from Lynsey's scripts
+
+meanQ <- read.table(
+  here::here(
+    "output/faststructure/madtom.sorted_snps/madtom.sorted_snps.2.meanQ"
+  )
+)
+breedNames <- read.table(here::here("output/faststructure/madtom.sorted_snps/fs_labels.txt"), header = TRUE)
+
+jpeg(
+  file = here::here("output/faststructure/madtom.sorted_snps/madtom_denovo.k2.jpg"),
+  bg = "white",
+  width = 720,
+  height = 460,
+  units = "px",
+  pointsize = 24
+)
+par(mai = c(2, 2, 0.5, 0.5))
+barplot(
+  t(as.matrix(meanQ)),
+  width = 1,
+  space = 0,
+  beside = FALSE,
+  col = c("#67001f","navy"),
+  xlab = "",
+  ylab = "Ancestry",
+  border = NA,
+  xaxt = "n",
+  offset = 0
+)
+
+mtext(
+  text = breedNames$breed,
+  side = 1,
+  line = 0,
+  at = breedNames$n_for_label,
+  las = 3
+)
+abline(v = breedNames$running_total,
+       lty = 1,
+       lwd = 0.2)
+
+dev.off()
+```
+
+
+# Commentary
+
+**Madtom alone:**
+Model complexity that maximizes marginal likelihood = 1
+Model components used to explain structure in data = 1
+
+---
+
+**Madtom + Stonecat:**
+Model complexity that maximizes marginal likelihood = 2
+Model components used to explain structure in data = 1

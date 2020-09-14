@@ -1,0 +1,51 @@
+rules: ["create_fai", "create_dict", "target_creator", "indel_realigner", "merge_realigned", "depth_of_coverage", "haplotype_caller"]
+
+#sample_number: [84434, 84435, 86398, 93670, 93671, 93672, 93674, 93675, 93676, 93677, 93678]
+sample_number: [93676]
+
+ref_genome: "/storage/htc/deckerlab/FROM_MUG01/MUG01_N/lwwvd/madtom/assembly/madtom_assembly_170124/CA/10-gapclose/backup_genome.scf.fasta"
+
+dict: "/storage/htc/deckerlab/FROM_MUG01/MUG01_N/lwwvd/madtom/assembly/madtom_assembly_170124/CA/10-gapclose/backup_genome.scf.dict"
+
+java_module: "java/openjdk/java-1.8.0-openjdk"
+
+# Lynsey used picard-tools-1.138
+picard_path: "/cluster/software/picard-tools/picard-tools-2.1.1/picard.jar"
+
+picard_module: "picard-tools/picard-tools-2.1.1"
+
+# Not sure what version Lynsey used
+samtools_module: "samtools/samtools-1.7"
+
+gatk_module: "gatk/gatk-3.5"
+
+gatk_path: "/cluster/software/gatk/gatk-3.5/GenomeAnalysisTK.jar"
+
+target_creator_gc: 6
+
+target_creator_xmx: 4
+
+target_creator_threads: 4
+
+indel_realigner_gc: 6
+
+indel_realigner_xmx: 4
+
+indel_realigner_threads: 4
+
+depth_of_coverage_gc: 6
+
+depth_of_coverage_xmx: 4
+
+depth_of_coverage_threads: 8
+
+haplotype_caller_gc: 4
+
+haplotype_caller_xmx: 15
+
+haplotype_caller_threads: 6
+
+picard_gc: 6
+
+#For samtools
+indel_merge_threads: 10

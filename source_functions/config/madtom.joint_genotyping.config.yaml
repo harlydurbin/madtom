@@ -1,0 +1,31 @@
+rules: ["genotype_gvcfs", "select_snps", "filter_snps", "merge_list", "concat_sort", "index"]
+
+sample_number: [84434, 84435, 86398, 93670, 93671, 93672, 93674, 93675, 93676, 93677, 93678]
+
+ref_genome: "/storage/htc/deckerlab/FROM_MUG01/MUG01_N/lwwvd/madtom/assembly/madtom_assembly_170124/CA/10-gapclose/backup_genome.scf.fasta"
+
+java_module: "java/openjdk/java-1.8.0-openjdk"
+
+gatk_module: "gatk/gatk-3.5"
+
+gatk_path: "/cluster/software/gatk/gatk-3.5/GenomeAnalysisTK.jar"
+
+genotype_gvcfs_gc: 4
+
+genotype_gvcfs_xmx: 50
+
+select_variants_gc: 4
+
+select_variants_xmx: 24
+
+variant_filtration_gc: 6
+
+variant_filtration_xmx: 24
+
+bcftools_module: "bcftools"
+
+concat_sort_nt: 12
+
+samtools_module: "samtools/samtools-1.7"
+
+htslib_module: "htslib/htslib-1.7"

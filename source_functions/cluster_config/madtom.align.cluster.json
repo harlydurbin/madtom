@@ -1,0 +1,54 @@
+{
+    "__default__":
+    {
+        "p" : "BioCompute,htc4,hpc5",
+        "account" : "animalsci",
+        "mem" : 120G,
+        "c": 12,
+        "o": "log/slurm_out/{rule}/{wildcards}.%j.out",
+        "mail-user" : "hjdurbin@mail.missouri.edu",
+        "mail-type" : "FAIL"
+    },
+    "index_reference":
+    {
+        "t": "04:00:00",
+        "mem" : 100G,
+        "c" : 12
+    },
+    "bwa_mem_paired":
+    {
+        "t": "04:00:00",
+        "p" : "Lewis,BioCompute,htc4,hpc5",
+        "mem" : 100G,
+        "c" : 40
+    },
+    "bwa_mem_unpaired":
+    {
+        "t": "04:00:00",
+        "p" : "Lewis,BioCompute,htc4,hpc5",
+        "mem" : 40G,
+        "c" : 40
+    },
+    "samtools_sort":
+    {
+        "t": "08:00:00",
+        "mem" : 150G,
+        "c" : 4,
+        "o": "log/slurm_out/samtools_sort/{wildcards}.%j.out"
+    },
+    "merge_bam":
+    {
+        "t": "04:00:00",
+        "mem" : 20G
+    },
+    "mark_duplicates":
+    {
+        "t": "08:00:00",
+        "mem" : 40G
+    },
+    "index_bam":
+    {
+        "t": "02:00:00",
+        "mem" : 10G
+    }
+}

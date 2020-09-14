@@ -1,0 +1,9 @@
+#rules: ["structure", "structure_ml"]
+
+k: [1, 2, 3, 4]
+
+prefix: ["madtom.sorted_snps", "madtom.sorted_snps.no_stonecat"]
+
+#prefix: ["madtom.sorted_snps"]
+
+faststructure_path: "~/faststructure/fastStructure-master"

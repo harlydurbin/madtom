@@ -1,0 +1,40 @@
+
+sample_number: [84434, 84435, 86398, 93670, 93671, 93672, 93674, 93675, 93676, 93677, 93678]
+
+#sample_number: [84435, 93671, 93672, 93674, 93678]
+
+read_num: [1, 2]
+
+read_id: ["P", "U1", "U2"]
+
+#ref_genome: "/storage/htc/deckerlab/FROM_MUG01/MUG01_N/lwwvd/madtom/assembly/madtom_assembly_170124/CA/10-gapclose/genome.scf.fasta"
+
+ref_genome: "/storage/htc/deckerlab/FROM_MUG01/MUG01_N/lwwvd/madtom/assembly/madtom_assembly_170124/CA/10-gapclose/backup_genome.scf.fasta"
+
+dict: "/storage/htc/deckerlab/FROM_MUG01/MUG01_N/lwwvd/madtom/assembly/madtom_assembly_170124/CA/10-gapclose/backup_genome.scf.dict"
+
+bwa_threads: 40
+
+# Not sure what version Lynsey used
+bwa_module: "bwa/bwa-0.7.17"
+
+# Not sure what version Lynsey used
+samtools_module: "samtools/samtools-1.7"
+
+# Mem per thread
+samtools_mem: 20
+
+samtools_threads: 5
+
+java_module: "java/openjdk/java-1.8.0-openjdk"
+
+# Lynsey used picard-tools-1.138
+picard_path: "/cluster/software/picard-tools/picard-tools-2.1.1/picard.jar"
+
+picard_module: "picard-tools/picard-tools-2.1.1"
+
+picard_gc: 6
+
+merge_bam_xmx: 10
+
+mark_duplicates_xmx: 20

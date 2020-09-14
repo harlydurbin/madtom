@@ -1,0 +1,52 @@
+{
+    "__default__":
+    {
+        "p" : "BioCompute,htc4,hpc5",
+        "account" : "animalsci",
+        "mem" : 120G,
+        "c": 12,
+        "o": "log/slurm_out/{rule}/{wildcards}.%j.out"
+    },
+    "create_dict":
+    {
+        "t": "08:00:00",
+    },
+    "create_fai":
+    {
+        "t": "08:00:00",
+    },
+    "target_creator":
+    {
+        "p" : "General,Lewis,BioCompute,htc4,hpc5",
+        "t": "02:00:00",
+        "mem" : 20G,
+        "c" : 12
+    },
+    "indel_realigner":
+    {
+        "t": "02:00:00",
+        "p" : "General,Lewis,BioCompute,htc4,hpc5",
+        "mem" : 24G,
+        "c" : 12
+    },
+    "merge_realigned":
+    {
+        "t": "04:00:00",
+        "mem" : 40G,
+        "c" : 12
+    },
+    "depth_of_coverage":
+    {
+        "t": "02:00:00",
+        "p" : "General,Lewis,BioCompute,htc4,hpc5",
+        "mem" : 24G,
+        "c" : 24
+    },
+    "haplotype_caller":
+    {
+        "t": "04:00:00",
+        "p" : "BioCompute,htc4,hpc5",
+        "mem" : 24G,
+        "c" : 12
+    }
+}

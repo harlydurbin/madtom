@@ -1,0 +1,25 @@
+{
+    "__default__":
+    {
+        "p" : "BioCompute,htc4,hpc5",
+        "account" : "animalsci",
+        "o": "log/slurm_out/{rule}/{wildcards}.%j.out",
+        "mail-user" : "hjdurbin@mail.missouri.edu",
+        "mail-type" : "NONE"
+    },
+    "structure":
+    {
+        "t": "24:00:00",
+        "mem" : 150G,
+        "c" : 1,
+    },
+    "ml_structure":
+    {
+        "t": "1:00:00",
+        "mem" : 1G,
+        "c" : 1,
+        "mail-user" : "hjdurbin@mail.missouri.edu",
+        "mail-type" : "FAIL,END",
+        "p" : "General,Lewis,BioCompute,htc4,hpc5"
+    }
+}

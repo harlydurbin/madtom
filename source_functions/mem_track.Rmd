@@ -1,0 +1,245 @@
+---
+title: "Memory tracking"
+author: "Harly Durbin"
+output:
+  html_document:
+    toc: true
+    toc_depth: 2
+    df_print: paged
+    code_folding: show
+---
+
+```{r setup}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(purrr)
+library(tidyr)
+library(lubridate)
+
+source(here::here("source_functions/psrecord_summary.R"))
+```
+
+# Setup 
+
+```{r}
+usage_summary <-
+  function(process, keyword) {
+    list.files(
+      path = here::here(glue::glue("log/psrecord/{process}")),
+      pattern = keyword,
+      full.names = TRUE
+    ) %>%
+      set_names(nm = (basename(.) %>%
+                        tools::file_path_sans_ext())) %>%
+      map_dfr(~ read_table2(
+        .x,
+        skip = 1,
+        col_names = c("time", "cpu_percent", "real_mb", "virtual_mb")
+      ), .id = "file") %>%
+      mutate(rule = keyword) %>%
+      summarise(max_time_minutes = max(time),
+                max_cpu_percent = max(cpu_percent),
+                max_mb = max(real_mb)) %>%
+      mutate(max_time_minutes = max_time_minutes / 60,
+             max_gb = max_mb * 0.001)
+    
+  }
+```
+
+```{r}
+usage_facets <-
+  function(process, keyword, sample_num = NULL) {
+    logs <-
+      list.files(
+      path = here::here(glue::glue("log/psrecord/{process}")),
+      pattern = keyword,
+      full.names = TRUE
+    ) %>%
+      set_names(nm = (basename(.) %>%
+                        tools::file_path_sans_ext())) %>%
+      map_dfr(~ read_table2(
+        .x,
+        skip = 1,
+        col_names = c("time", "cpu_percent", "real_mb", "virtual_mb")
+      ), .id = "file") %>%
+      mutate(rule = keyword) 
+    
+    logs <- 
+      if(!is.null(sample_num)){
+        logs %>% 
+          filter(file %in% sample(file, sample_num))
+      } else logs
+    
+    logs %>% 
+      ggplot(aes(x = time, y = real_mb)) +
+      geom_line() +
+      facet_wrap( ~ file)
+    
+  }
+
+```
+
+
+# Alignment
+
+## `bwa_mem`
+
+### Paired
+
+```{r}
+usage_summary(process = "align", keyword = "bwa_mem_paired")
+```
+
+```{r}
+usage_facets(process = "align", keyword = "bwa_mem_paired")
+```
+
+### Unpaired
+
+```{r}
+usage_summary(process = "align", keyword = "bwa_mem_unpaired")
+```
+
+```{r}
+usage_facets(process = "align", keyword = "bwa_mem_unpaired")
+```
+
+## `samtools_sort`
+
+```{r}
+usage_summary(process = "align", keyword = "samtools_sort")
+```
+
+```{r}
+usage_facets(process = "align", keyword = "samtools_sort")
+```
+
+## `merge_bam`
+
+```{r}
+usage_summary(process = "align", keyword = "merge_bam")
+```
+
+```{r}
+usage_facets(process = "align", keyword = "merge_bam")
+```
+
+## `mark_duplicates`
+
+```{r}
+usage_summary(process = "align", keyword = "mark_duplicates")
+```
+
+```{r}
+usage_facets(process = "align", keyword = "mark_duplicates")
+```
+
+## `index_bam`
+
+```{r}
+usage_summary(process = "align", keyword = "index_bam")
+```
+
+```{r}
+usage_facets(process = "align", keyword = "index_bam")
+```
+
+
+# Genotype calling
+
+## `target_creator`
+
+```{r}
+usage_summary(process = "call_genotypes", keyword = "target_creator")
+```
+
+```{r}
+usage_facets(process = "call_genotypes", keyword = "target_creator", sample_num = 32)
+```
+
+
+## `indel_realigner`
+
+```{r}
+usage_summary(process = "call_genotypes", keyword = "indel_realigner")
+```
+
+```{r}
+usage_facets(process = "call_genotypes", keyword = "indel_realigner", sample_num = 32)
+```
+
+## `depth_of_coverage`
+
+```{r}
+usage_summary(process = "call_genotypes", keyword = "depth_of_coverage")
+```
+
+```{r}
+usage_facets(process = "call_genotypes", keyword = "depth_of_coverage", sample_num = 32)
+```
+
+## `haplotype_caller`
+
+```{r}
+usage_summary(process = "call_genotypes", keyword = "haplotype_caller")
+```
+
+```{r}
+usage_facets(process = "call_genotypes", keyword = "haplotype_caller", sample_num = 32)
+```
+
+# Joint genotyping & filtering
+
+## `genotype_gvcfs`
+
+```{r}
+usage_summary(process = "joint_genotyping", keyword = "genotype_gvcfs")
+```
+
+```{r}
+usage_facets(process = "joint_genotyping", keyword = "genotype_gvcfs")
+```
+
+
+## `select_snps`
+
+```{r}
+usage_summary(process = "joint_genotyping", keyword = "select_snps")
+```
+
+```{r}
+usage_facets(process = "joint_genotyping", keyword = "select_snps")
+```
+
+## `filter_snps` 
+
+```{r}
+usage_summary(process = "joint_genotyping", keyword = "filter_snps")
+```
+
+```{r}
+usage_facets(process = "joint_genotyping", keyword = "filter_snps")
+```
+
+
+## `concat_sort`
+
+```{r}
+usage_summary(process = "joint_genotyping", keyword = "concat_sort")
+```
+
+```{r}
+usage_facets(process = "joint_genotyping", keyword = "concat_sort")
+```
+
+## `index`
+
+```{r}
+usage_summary(process = "joint_genotyping", keyword = "index")
+```
+
+```{r}
+usage_facets(process = "joint_genotyping", keyword = "index")
+```
