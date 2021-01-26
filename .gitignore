@@ -5,5 +5,5 @@
 *.log
 *.out
 *.pdf
-ftpconfigs/*
+*.ftpconfig
 output/*
